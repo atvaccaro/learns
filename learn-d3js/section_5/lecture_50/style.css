@@ -1,0 +1,33 @@
+#chart {
+    width: 800px;
+    height: 400px;
+    background-color: #f7f7f7;
+    margin: 25px auto;
+    position: relative;
+}
+
+.bar {
+    display: inline-block;
+    background-color: #7ED26D;
+    width: 25px;
+    margin-right: 5px;
+}
+
+rect:hover {
+    fill: #0C9CDF;
+    transition: 0.5s all ease-in;
+}
+
+#tooltip {
+    position: absolute;
+    width: 75px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid #000;
+    pointer-events: none;
+    display: none;
+    font-family: sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}

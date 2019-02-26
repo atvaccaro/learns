@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ordinal Scales</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<div id="chart"></div>
+<script src="https://d3js.org/d3.v4.js"></script>
+<script>
+    let fruit = ['Apples', 'Oranges', 'Grapes', 'Strawberries', 'Kiwi'];
+    let scale = d3.scaleBand()
+        .domain(fruit)
+        // .domain(d3.range(fruit.length))
+        .range([0, 500]);
+</script>
+</body>
+</html>

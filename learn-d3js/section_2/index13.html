@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG</title>
+</head>
+<body>
+<svg width="500" height="500">
+    <defs>
+        <g id="rectangle">
+            <rect width="50" height="50"></rect>
+            <rect width="50" height="50" x="50" fill="blue"></rect>
+        </g>
+    </defs>
+
+    <use xlink:href="#rectangle" x="100" y="100"></use>
+    <use xlink:href="#rectangle" x="200" y="200"></use>
+</svg>
+</body>
+</html>

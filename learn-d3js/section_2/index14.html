@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG</title>
+</head>
+<body>
+<svg width="500" height="500">
+    <defs>
+        <path id="custom_text_path" d="M0,0 Q0,100 150,100"></path>
+    </defs>
+    <text x="10" y="100" stroke="#000" font-size="30">
+        <textPath xlink:href="#custom_text_path">
+            Hello world!
+        </textPath>
+    </text>
+</svg>
+</body>
+</html>
