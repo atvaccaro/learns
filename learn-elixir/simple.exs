@@ -3,7 +3,7 @@ IO.puts "Hello world from Elixir"
 
 # Anonymous function; use period when calling
 add = fn a, b -> a + b end
-IO.puts add.(1,2)
+IO.puts add.(1, 2)
 
 # Closure
 double = fn a -> add.(a, a) end
@@ -55,3 +55,39 @@ IO.puts a
 IO.puts b
 IO.puts c
 # {a, b, c} = [:hello, "world", 42] # would raise MatchError
+{:ok, result} = {:ok, 13}
+IO.puts result
+# {:ok, result} = {:error, :oops} # would raise MatchError
+[a, b, c] = [1, 2, 3]
+IO.puts a
+IO.puts b
+IO.puts c
+[head | tail] = [1, 2, 3]
+IO.puts head
+IO.inspect tail
+list = [1, 2, 3]
+IO.inspect [0 | list]
+x = 1
+# ^x = 2 # would raise MatchError
+# use ^ (pin operator) to match on value rather than rebind
+{y, ^x} = {2, 1}
+IO.puts y
+# {y, ^x} = {2, 2} # would raise MatchError
+{x, x} = {1, 1}
+# {x, x} = {1, 2} # would raise MatchError
+# use _ to ignore things
+[h | _] = [1, 2, 3]
+IO.puts h
+# cannot put function calls on the left side of a match
+# length([1, [2], 3]) = 3 # would raise CompileError
+
+# case, cond, if
+case {1, 2, 3} do
+  {4, 5, 6} ->
+    IO.puts "Will not match"
+  {1, x, 3} ->
+    IO.puts "Will match and bind 2 to x"
+    IO.puts x
+  _ ->
+    IO.puts "Would match anything"
+end
