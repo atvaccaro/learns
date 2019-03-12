@@ -81,10 +81,18 @@ IO.puts(h)
 # cannot put function calls on the left side of a match
 # length([1, [2], 3]) = 3 # would raise CompileError
 
-# case, cond, if
+# case
+x = 5
+
 case {1, 2, 3} do
   {4, 5, 6} ->
     IO.puts("Will not match")
+
+  {1, ^x, 3} ->
+    "Match against existing x value (will not match)"
+
+  {1, x, 3} when x > 3 ->
+    IO.puts("Will not match because of when guard")
 
   {1, x, 3} ->
     IO.puts("Will match and bind 2 to x")
@@ -93,3 +101,104 @@ case {1, 2, 3} do
   _ ->
     IO.puts("Would match anything")
 end
+
+# errors in guards do not leak but simply make the guard fail (calling hd(1) raises an error)
+case 1 do
+  x when hd(x) -> IO.puts("Won't match")
+  x -> IO.puts("Got #{x}")
+end
+
+# a CaseClauseError is raised if no matches are found
+
+# anonymous functions can have multiple clauses but they must have the same number of arguments
+f = fn
+  x, y when x > 0 -> x + y
+  x, y -> x * y
+end
+
+IO.puts(f.(1, 2))
+IO.puts(f.(-1, 1))
+
+# cond is like an else-if for conditions rather than pattern matching
+# cond considers any value besides nil and false to be true
+cond do
+  2 + 2 == 5 ->
+    IO.puts("This is never true")
+
+  2 * 2 == 3 ->
+    IO.puts("Nor this")
+
+  hd([1, 2, 3]) ->
+    IO.puts("1 is considered as true")
+
+  true ->
+    IO.puts("This is always true (equivalent to else)")
+end
+
+# if and unless only check one value (they are macros)
+if true do
+  IO.puts("This works!")
+else
+  IO.puts("This will not print")
+end
+
+unless true do
+  IO.puts("This will never be seen")
+end
+
+# example of keyword lists to "if" function
+IO.puts(if false, do: :this, else: :that)
+
+# do/end blocks are sugar; these blocks are equivaletn
+if true do
+  a = 1 + 2
+  a + 10
+  IO.puts(a)
+end
+
+if true,
+  do:
+    (
+      a = 1 + 2
+      a + 10
+      IO.puts(a)
+    )
+
+# keyword maps are [key: value]
+# keys must be atoms, are ordered as specified by the developer, and can exist more than once
+list = [{:a, 1}, {:b, 2}]
+IO.puts(list == [a: 1, b: 2])
+IO.inspect([z: 0] ++ list ++ [c: 3])
+
+# things in the front are retrieved first
+new_list = [a: 0] ++ list
+IO.puts(new_list[:a])
+
+IO.puts(if false, do: :this, else: :that)
+# the "if" syntax is equivalent to
+IO.puts(if(false, do: :this, else: :that))
+
+# maps allow any values as keys, and are unordered
+map = %{:a => 1, 2 => :b}
+IO.inspect(map)
+IO.puts(map[:a])
+IO.puts(map[2])
+# nil
+IO.puts(map[:c])
+
+# useful for pattern matching; will match as long as keys in pattern exist in the map (empty map matches all maps)
+IO.inspect(%{} = %{:a => 1, 2 => :b})
+%{:a => a} = %{:a => 1, 2 => :b}
+IO.puts(a)
+# %{:c => c} = %{:a => 1, 2 => :b} # raises MatchError
+# can use variables as keys
+n = 1
+map = %{n => :one}
+IO.puts(map[n])
+# Map module has get/2, put/3, and to_list/1
+# Maps can be updated
+map = %{:a => 1, 2 => :b}
+IO.inspect(%{map | 2 => "two"})
+# %{map | :c => 3} # would raise KeyError
+# special syntax for atom keys (example of "assertive" code)
+IO.puts(map.a)
