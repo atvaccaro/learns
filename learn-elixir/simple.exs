@@ -202,3 +202,135 @@ IO.inspect(%{map | 2 => "two"})
 # %{map | :c => 3} # would raise KeyError
 # special syntax for atom keys (example of "assertive" code)
 IO.puts(map.a)
+
+# nested data structures
+users = [
+  john: %{name: "John", age: 27, languages: ["Erlang", "Ruby", "Elixir"]},
+  mary: %{name: "Mary", age: 29, languages: ["Elixir", "F#", "Clojure"]}
+]
+
+IO.puts(users[:john].age)
+# put_in assigns a value
+IO.inspect(put_in(users[:john].age, 31))
+# update_in uses a function
+IO.inspect(
+  update_in(users[:mary].languages, fn languages -> List.delete(languages, "Clojure") end)
+)
+
+# module
+defmodule Math do
+  def sum(a, b) do
+    a + b
+  end
+
+  # use "defp" for private
+  defp do_sum(a, b) do
+    a + b
+  end
+
+  # can use guards and multiple clauses
+  # question mark indicates a bool return
+  def zero?(0) do
+    true
+  end
+
+  # keyword example
+  def zero?(1), do: false
+
+  # FunctionClauseError if guard fails
+  def zero?(x) when is_integer(x) do
+    false
+  end
+end
+
+IO.puts(Math.sum(1, 2))
+IO.puts(Math.zero?(0))
+IO.puts(Math.zero?(1))
+IO.puts(Math.zero?(2))
+
+# get named function as function type
+fun = &Math.zero?/1
+IO.inspect(fun)
+IO.puts(is_function(fun))
+IO.puts(fun.(0))
+
+# function shortcuts
+# &1 represents first arg
+fun = &(&1 + 1)
+IO.puts(fun.(1))
+fun = fn x -> x + 1 end
+IO.puts(fun.(1))
+fun = &"Good #{&1}"
+IO.puts(fun.("morning"))
+
+# named functions support default args
+defmodule Concat do
+  def join(a, b, sep \\ " ") do
+    a <> sep <> b
+  end
+end
+
+IO.puts(Concat.join("test", "call"))
+IO.puts(Concat.join("test", "call", "_"))
+
+# If a function with default values has multiple clauses, it is required to
+# create a function head (without an actual body) for declaring defaults
+defmodule Concat2 do
+  def join(a, b \\ nil, sep \\ " ")
+
+  # sep is ignored
+  def join(a, b, _sep) when is_nil(b) do
+    a
+  end
+
+  def join(a, b, sep) do
+    a <> sep <> b
+  end
+end
+
+IO.puts(Concat2.join("Hello", "World"))
+IO.puts(Concat2.join("Hello", "World", "_"))
+IO.puts(Concat2.join("Hello"))
+
+# recursion!
+defmodule Recursion do
+  def print_multiple_times(msg, n) when n <= 1 do
+    IO.puts(msg)
+  end
+
+  def print_multiple_times(msg, n) do
+    IO.puts(msg)
+    print_multiple_times(msg, n - 1)
+  end
+end
+
+Recursion.print_multiple_times("Recursion", 3)
+
+defmodule Math2 do
+  def sum_list([head | tail], accumulator) do
+    sum_list(tail, head + accumulator)
+  end
+
+  def sum_list([], accumulator) do
+    accumulator
+  end
+
+  def double_each([head | tail]) do
+    [head * 2 | double_each(tail)]
+  end
+
+  def double_each([]) do
+    []
+  end
+end
+
+IO.puts(Math2.sum_list([1, 2, 3, 4], 0))
+IO.inspect(Math2.double_each([1, 2, 3, 4]))
+
+# Enum module
+IO.puts(Enum.reduce([1, 2, 3], 0, fn x, acc -> x + acc end))
+IO.inspect(Enum.map([1, 2, 3], fn x -> x * 2 end))
+
+# capture syntax (wew)
+IO.puts(Enum.reduce([1, 2, 3], 0, &+/2))
+IO.inspect(Enum.map([1, 2, 3], &(&1 * 2)))
