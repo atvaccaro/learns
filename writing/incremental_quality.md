@@ -11,6 +11,14 @@ Tim Stewart:
 
 From [The Zen of Python](https://www.python.org/dev/peps/pep-0020/#id3).
 
+### Coupling and Cohesion [link](https://www.geeksforgeeks.org/software-engineering-coupling-and-cohesion/)
+* Coupling
+  * Interdependence between modules
+  * Ideally, only necessary data (and no unnecessary data) is passed between modules
+* Cohesion
+  * Relatedness within a module
+  * Logical is bad, coincidental is worse
+  * Functional is best
 
 ### Overrated stuff
 * Project organization
@@ -35,23 +43,29 @@ No outside interaction; other function calls are usually mocked.
 
 Fast to run, easy to implement.
 
+Very helpful for reading comprehension.
+
 ### Integration tests
 Making sure all the pieces fit together.
 
 Often actually interact with a database or the filesystem.
+
+Provide safety bumpers when refactoring code substantially.
+
+Prevents regressions introduced by changing module interfaces.
 
 Still uses canned data.
 
 ### Acceptance tests
 Check that the overall system solves the problems of the user.
 
-Provide safety bumpers when refactoring code substantially.
+Prevents regressions introduced by changing business logic.
 
 This is where real data might come in.
 
 ## Incremental quality how-to
 1. Get annoyed or confused by something
-1. `git blame` someone and ask them what’s up
+1. `git blame` the culprit and ask them what’s up
 1. Write new tests (and/or modify existing ones)
 1. Run the tests
 1. Make changes
