@@ -43,15 +43,15 @@ Often actually interact with a database or the filesystem.
 Still uses canned data.
 
 ### Acceptance tests
-Check that the overall system solves the problems of the user
+Check that the overall system solves the problems of the user.
 
-Provide safety bumpers when refactoring code substantially
+Provide safety bumpers when refactoring code substantially.
 
-For us, this is where real data comes in
+This is where real data might come in.
 
 ## Incremental quality how-to
 1. Get annoyed or confused by something
-1. Git blame someone and ask them what’s up
+1. `git blame` someone and ask them what’s up
 1. Write new tests (and/or modify existing ones)
 1. Run the tests
 1. Make changes
@@ -59,6 +59,9 @@ For us, this is where real data comes in
 
 ## Necessary but not sufficient
 No one type of test is sufficient!
-They do vary in usefulness depending on the situation
-Complicated functions probably require unit tests
-Impactful functions probably require acceptance tests
+
+They do vary in usefulness depending on the situation.
+
+Complicated functions probably require unit tests.
+
+Impactful functions probably require acceptance tests.
