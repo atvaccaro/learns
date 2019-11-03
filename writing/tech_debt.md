@@ -20,3 +20,15 @@ Keeping code quality high is actually cheaper eventually!
 >* High internal quality keeps cruft to a minimum, allowing a team to add features with less effort, time, and cost.
 
 ![](https://www.martinfowler.com/articles/is-quality-worth-cost/both.png)
+
+## [Quantifying technical debt](https://kellysutton.com/2017/10/24/quantifying-technical-debt.html)
+Quantifying the principal and interest is very important. Otherwise, how would you know if it's worth spending time
+fixing the debt?
+
+At its core, the debt truly is monetary. Paying engineers to maintain indebted systems means fewer releases and more
+time spent paying interest than shipping.
+
+Track one of the following:
+* Time - track time spent on various things
+* Money - evaluate how much money is being spent per feature
+* Bugs - count linter failures or execution errors/crashes

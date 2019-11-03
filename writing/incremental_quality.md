@@ -6,10 +6,17 @@ Potter Stewart:
 >I shall not today attempt further to define the kinds of material I understand to be embraced within that shorthand description, and perhaps I could never succeed in intelligibly doing so. But I know it when I see it…
 
 ### Identifying bad code
-Tim Stewart:
+Tim Stewart, _[The Zen of Python](https://www.python.org/dev/peps/pep-0020/#id3)_:
 >If the implementation is hard to explain, it's a bad idea. If the implementation is easy to explain, it may be a good idea.
 
-From [The Zen of Python](https://www.python.org/dev/peps/pep-0020/#id3).
+* Is the code confusing?
+* Is it difficult to modify?
+* Is it difficult to unit test?
+* Can you understand what a function does based on its name and signature?
+
+### Linting
+Linters are tools that run on your source code and identify poor coding practices and/or potential bugs.
+[Pylint](https://www.pylint.org/)
 
 ### Coupling and Cohesion [link](https://www.geeksforgeeks.org/software-engineering-coupling-and-cohesion/)
 * Coupling
