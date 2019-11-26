@@ -31,27 +31,27 @@ class AddTask(Task):
 # initialize the task instance
 addtask = AddTask(default=1)
 
-with Flow("My first flow!") as flow:
-    first_result = add(1, y=2)
-    second_result = add(x=first_result, y=100)
-
-state = flow.run()
-
-assert state.is_successful()
-
-first_task_state = state.result[first_result]
-assert first_task_state.is_successful()
-assert first_task_state.result == 3
-
-second_task_state = state.result[second_result]
-assert second_task_state.is_successful()
-assert second_task_state.result == 103
-
-with Flow("Say hi!") as flow:
-    name = Parameter("name")
-    say_hello(name)
-
 if __name__ == '__main__':
-    flow.run(name="Marvin")
+    with Flow("My first flow!") as flow:
+        first_result = add(1, y=2)
+        second_result = add(x=first_result, y=100)
 
+    state = flow.run()
 
+    assert state.is_successful()
+
+    first_task_state = state.result[first_result]
+    assert first_task_state.is_successful()
+    assert first_task_state.result == 3
+
+    second_task_state = state.result[second_result]
+    assert second_task_state.is_successful()
+    assert second_task_state.result == 103
+
+    print(first_task_state, second_task_state)
+
+    # with Flow("Say hi!") as flow:
+    #     name = Parameter("name")
+    #     say_hello(name)
+    #
+    # flow.run(name="Marvin")

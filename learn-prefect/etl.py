@@ -1,4 +1,6 @@
-from prefect import task, Flow
+import sys
+
+from prefect import task, Flow, Parameter
 
 
 @task
@@ -10,20 +12,39 @@ def extract():
 @task
 def transform(data):
     """Multiply the input by 10"""
+    if not data:
+        data = [1, 2, 3]
     return [i * 10 for i in data]
 
 
 @task
-def load(data):
+def load(data, test=False):
     """Print the data to indicate it was received"""
-    print("Here's your data: {}".format(data))
+    if test:
+        print("TESTING MODE: DID NOT LOAD")
+    else:
+        print("Here's your data: {}".format(data))
 
 
-with Flow('ETL') as flow:
+with Flow('ETL') as extract_only:
     e = extract()
-    t = transform(e)
-    l = load(t)
+
+@task
+def run_extract_only():
+    extract_only.run()
+
+
+with Flow('ETL2') as flow:
+    test = Parameter('test', default=False)
+    run_extract_only()
+    t = transform(data=None)
+    l = load(t, test=test)
+
 
 # flow.visualize()
-flow.run()  # prints "Here's your data: [10, 20, 30]"
+
+if 'extract' in sys.argv:
+    extract_only.run()
+else:
+    flow.run(test=True)
 
