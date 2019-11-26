@@ -1,4 +1,10 @@
+"""
+Step implementations for example.feature
+"""
+from functools import reduce
+from operator import mul
 from unittest import TestCase
+
 
 from behave import given, when, then, step
 
@@ -27,7 +33,7 @@ def step_impl(context):
 
 @when('we multiply the numbers')
 def step_impl(context):
-    context.results = [int(row['a']) * int(row['b']) for row in context.numbers]
+    context.results = [reduce(mul, map(int, row), 1) for row in context.numbers]
 
 
 @then('we get the results we expect')

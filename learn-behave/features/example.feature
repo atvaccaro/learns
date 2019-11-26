@@ -15,3 +15,15 @@ Feature: Showing off behave
       | result |
       | 2      |
       | 12     |
+
+
+  Scenario: Run a test with a different table
+    Given a set of numbers
+      | a | b | c |
+      | 1 | 2 | 3 |
+      | 3 | 4 | 5 |
+    When we multiply the numbers
+    Then we get the results we expect
+      | result |
+      | 6      |
+      | 60     |
