@@ -3,11 +3,11 @@ import unittest
 import main
 
 suite "Test all the main functions":
-  test "splitInstruction works":
+  test "parseInstruction works":
     let raw_ins = "R123"
     let expected: instruction = ('R', 123)
 
-    let actual = splitInstruction(raw_ins)
+    let actual = parseInstruction(raw_ins)
 
     require(actual == expected)
 
