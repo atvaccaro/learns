@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: covid
+    database: database
+    schema: main
+    tables:
+      - name: county_level_confirmed_cases
+
+models:
+  - name: stg__county_level_confirmed_cases
+    description: County-level data for confirmed COVID cases.
