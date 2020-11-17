@@ -1,0 +1,46 @@
+version: 1
+send_anonymous_usage_stats: true
+project_id: ef6b7637-d4ae-43ea-b07a-eb97242b965b
+plugins:
+  extractors:
+  - name: tap-gitlab
+    variant: meltano
+    pip_url: git+https://gitlab.com/meltano/tap-gitlab.git
+    config:
+      projects: meltano/meltano
+      start_date: '2020-05-01T00:00:00Z'
+  loaders:
+  - name: target-jsonl
+    variant: andyh1203
+    pip_url: target-jsonl
+  - name: target-postgres
+    variant: meltano
+    pip_url: git+https://github.com/meltano/target-postgres.git
+  transforms:
+  - name: tap-gitlab
+    variant: meltano
+    pip_url: https://gitlab.com/meltano/dbt-tap-gitlab.git
+  orchestrators:
+  - name: airflow
+    pip_url: apache-airflow==1.10.12 --constraint https://raw.githubusercontent.com/apache/airflow/constraints-1.10.12/constraints-3.6.txt
+  transformers:
+  - name: dbt
+    pip_url: dbt==0.16.1
+  files:
+  - name: dbt
+    pip_url: git+https://gitlab.com/meltano/files-dbt.git
+  - name: airflow
+    pip_url: git+https://gitlab.com/meltano/files-airflow.git
+schedules:
+- name: gitlab-to-jsonl
+  extractor: tap-gitlab
+  loader: target-jsonl
+  transform: skip
+  interval: '@hourly'
+  start_date: 2020-05-01 00:00:00
+- name: gitlab-to-postgres
+  extractor: tap-gitlab
+  loader: target-postgres
+  transform: run
+  interval: '@daily'
+  start_date: 2020-05-01 00:00:00
