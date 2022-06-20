@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "python-gis"
+version = "0.1.0"
+description = ""
+authors = ["Andrew Vaccaro <atvaccaro@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+jupyterlab = "^3.4.3"
+jupyterlab-git = "^0.37.1"
+geopandas = "^0.10.2"
+matplotlib = "^3.5.2"
+geojson = "^2.5.0"
+mapclassify = "^2.4.3"
+contextily = "^1.2.0"
+folium = "^0.12.1"
+mplleaflet = "^0.0.5"
+osmnx = "^1.2.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
